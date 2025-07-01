@@ -105,6 +105,7 @@ class NewMcpServer extends React.Component {
           localServerConfig = {},
           remoteServerConfig = {},
           allVersions = [],
+          frontEndpointConfig = {},
         } = result.data;
 
         const initFileData = {
@@ -141,6 +142,14 @@ class NewMcpServer extends React.Component {
             remoteServerConfig?.serviceRef?.groupName +
             '@@' +
             remoteServerConfig?.serviceRef?.serviceName;
+        }
+
+        if (frontEndpointConfig) {
+          initFileData['advType'] = frontEndpointConfig?.type;
+          initFileData['advProtocol'] = frontEndpointConfig?.protocol;
+          initFileData['advEndpointType'] = frontEndpointConfig?.endpointType;
+          initFileData['advEndpointAddress'] = frontEndpointConfig?.endpointAddress;
+          initFileData['advPath'] = frontEndpointConfig?.path;
         }
 
         this.field.setValues(initFileData);
@@ -210,6 +219,13 @@ class NewMcpServer extends React.Component {
               localServerConfig: values?.localServerConfig
                 ? JSON.parse(values?.localServerConfig)
                 : '{}',
+              frontEndpointConfig: {
+                type: values?.advType,
+                protocol: values?.advProtocol,
+                endpointType: values?.advEndpointType,
+                endpointAddress: values?.advEndpointAddress || '',
+                path: values?.advPath || '',
+              },
             },
             null,
             2
@@ -232,6 +248,13 @@ class NewMcpServer extends React.Component {
               enabled: true,
               remoteServerConfig: {
                 exportPath: values?.exportPath || '',
+              },
+              frontEndpointConfig: {
+                type: values?.advType,
+                protocol: values?.advProtocol,
+                endpointType: values?.advEndpointType,
+                endpointAddress: values?.advEndpointAddress || '',
+                path: values?.advPath || '',
               },
             },
             null,
@@ -790,7 +813,10 @@ class NewMcpServer extends React.Component {
           {/* 服务版本 */}
           <FormItem label={locale.serverVersion} required>
             <Input
-              {...init('version', { props: { placeholder: 'e.g. 1.0.0' }, rules: [{ required: true }] })}
+              {...init('version', {
+                props: { placeholder: 'e.g. 1.0.0' },
+                rules: [{ required: true }],
+              })}
             />
             {currentVersionExist && (
               <>
@@ -798,6 +824,65 @@ class NewMcpServer extends React.Component {
                 <p style={{ color: 'red' }}>{locale.editMoreNeedNewVersion}</p>
               </>
             )}
+          </FormItem>
+          <FormItem label={locale.advType}>
+            <RadioGroup
+              {...init('advType', {
+                initValue: 'sse',
+              })}
+              disabled={isEdit}
+            >
+              <Row>
+                <Radio key={'sse'} id={'sse'} value={'sse'}>
+                  sse
+                </Radio>
+                <Radio key={'streamable'} id={'streamable'} value={'streamable'}>
+                  streamable
+                </Radio>
+              </Row>
+            </RadioGroup>
+          </FormItem>
+          <FormItem label={locale.advProtocol}>
+            <RadioGroup
+              {...init('advProtocol', {
+                initValue: 'http',
+              })}
+              disabled={isEdit}
+            >
+              <Row>
+                <Radio key={'http'} id={'http'} value={'http'}>
+                  http
+                </Radio>
+                <Radio key={'https'} id={'https'} value={'https'}>
+                  https
+                </Radio>
+              </Row>
+            </RadioGroup>
+          </FormItem>
+          <FormItem label={locale.advEndpointType}>
+            <RadioGroup
+              {...init('advEndpointType', {
+                initValue: 'direct',
+              })}
+              disabled={isEdit}
+            >
+              <Row>
+                <Radio key={'direct'} id={'direct'} value={'direct'}>
+                  direct
+                </Radio>
+                <Radio key={'refToBackend'} id={'refToBackend'} value={'refToBackend'}>
+                  refToBackend
+                </Radio>
+              </Row>
+            </RadioGroup>
+          </FormItem>
+          <FormItem label={locale.advEndpointAddress}>
+            <Input
+              {...init('advEndpointAddress', { props: { placeholder: 'e.g. example.com:8080' } })}
+            />
+          </FormItem>
+          <FormItem label={locale.advPath}>
+            <Input {...init('advPath', { props: { placeholder: 'e.g. /sse' } })} />
           </FormItem>
 
           {getParams('mcptype') && (

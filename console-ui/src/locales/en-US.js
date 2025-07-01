@@ -757,6 +757,7 @@ const I18N_CONF = {
     serverName: 'Name',
     serverType: 'Type',
     serverDescription: 'Description',
+    frontEndpointConfig: 'Advanced Settings',
     operations: 'Operations',
     backendProtocol: 'Backend Protocol',
     exportPath: 'Access Path',

@@ -35,7 +35,7 @@ public class McpServerBasicInfo {
     private String name;
     
     /**
-     * It should be {@link AiConstants.Mcp#MCP_PROTOCOL_STDIO}, {@link AiConstants.Mcp#MCP_PROTOCOL_SSE}, 
+     * It should be {@link AiConstants.Mcp#MCP_PROTOCOL_STDIO}, {@link AiConstants.Mcp#MCP_PROTOCOL_SSE},
      * {@link AiConstants.Mcp#MCP_PROTOCOL_STREAMABLE}, {@link AiConstants.Mcp#MCP_PROTOCOL_HTTP} or {@link AiConstants.Mcp#MCP_PROTOCOL_DUBBO}.
      */
     private String protocol;
@@ -59,6 +59,8 @@ public class McpServerBasicInfo {
      * Should be set when `type` is {@link AiConstants.Mcp#MCP_PROTOCOL_STDIO}.
      */
     private Map<String, Object> localServerConfig;
+    
+    private FrontEndpointConfig frontEndpointConfig;
     
     private boolean enabled = true;
     
@@ -105,6 +107,14 @@ public class McpServerBasicInfo {
     
     public void setLocalServerConfig(Map<String, Object> localServerConfig) {
         this.localServerConfig = localServerConfig;
+    }
+    
+    public FrontEndpointConfig getFrontEndpointConfig() {
+        return frontEndpointConfig;
+    }
+    
+    public void setFrontEndpointConfig(FrontEndpointConfig frontEndpointConfig) {
+        this.frontEndpointConfig = frontEndpointConfig;
     }
 
     public String getFrontProtocol() {

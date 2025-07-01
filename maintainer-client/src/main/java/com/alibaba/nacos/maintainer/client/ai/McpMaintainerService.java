@@ -17,11 +17,7 @@
 package com.alibaba.nacos.maintainer.client.ai;
 
 import com.alibaba.nacos.api.ai.constant.AiConstants;
-import com.alibaba.nacos.api.ai.model.mcp.McpEndpointSpec;
-import com.alibaba.nacos.api.ai.model.mcp.McpServerBasicInfo;
-import com.alibaba.nacos.api.ai.model.mcp.McpServerDetailInfo;
-import com.alibaba.nacos.api.ai.model.mcp.McpServerRemoteServiceConfig;
-import com.alibaba.nacos.api.ai.model.mcp.McpToolSpecification;
+import com.alibaba.nacos.api.ai.model.mcp.*;
 import com.alibaba.nacos.api.ai.model.mcp.registry.ServerVersionDetail;
 import com.alibaba.nacos.api.common.Constants;
 import com.alibaba.nacos.api.exception.NacosException;
@@ -111,7 +107,7 @@ public interface McpMaintainerService {
 
     /**
      * Blur search first 100 Mcp Servers in Nacos with mcp name pattern.
-     * 
+     *
      * @param namespaceId namespaceId
      * @param mcpName  mcpName pattern, if empty string or null, will list all Mcp Servers.
      * @param pageNo   the page number of mcp Servers
@@ -328,6 +324,7 @@ public interface McpMaintainerService {
         serverSpec.setVersionDetail(detail);
         serverSpec.setDescription(description);
         serverSpec.setRemoteServerConfig(remoteServiceConfig);
+        //serverSpec.setFrontEndpointConfig(frontEndpointConfig);
         return createRemoteMcpServer(mcpName, serverSpec, toolSpec, endpointSpec);
     }
     
@@ -421,7 +418,7 @@ public interface McpMaintainerService {
 
     /**
      * Create new mcp server to Nacos.
-     * 
+     *
      * @param namespaceId namespaceId
      * @param mcpName      mcp server name of the new mcp server
      * @param isLatest     publish current version to latest

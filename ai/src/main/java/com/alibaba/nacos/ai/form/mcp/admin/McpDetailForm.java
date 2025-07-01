@@ -21,7 +21,7 @@ import com.alibaba.nacos.api.exception.api.NacosApiException;
 import com.alibaba.nacos.api.model.v2.ErrorCode;
 import com.alibaba.nacos.common.utils.StringUtils;
 
-import java.io.Serial;
+import java.io.Serial;import java.util.List;
 
 /**
  * Nacos AI Mcp Server request detail form, used in create or update.
@@ -38,6 +38,8 @@ public class McpDetailForm extends McpForm {
     private String toolSpecification;
     
     private String endpointSpecification;
+    
+    private String frontEndpointConfig;
     
     @Override
     public void validate() throws NacosApiException {
@@ -72,4 +74,11 @@ public class McpDetailForm extends McpForm {
         this.endpointSpecification = endpointSpecification;
     }
     
+    public String getFrontEndpointConfig() {
+        return frontEndpointConfig;
+    }
+
+    public void setFrontEndpointConfig(String frontEndpointConfig) {
+        this.frontEndpointConfig = frontEndpointConfig;
+    }
 }
